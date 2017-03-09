@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Eggly</title>
     <link rel="stylesheet" href="/index.css" media="screen" title="no title">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
     <script src="/app/eggly-app.start.js"></script>
   </head>
@@ -18,18 +19,26 @@
     <div class="main">
       <ul>
         <li ng-repeat="bookmark in bookmarks | filter: {category: currentCategory.name}">
+          <button type="button" ng-click="setEditingBookmark(bookmark);startEditing();">Edit</button>
           <a href={{bookmark.url}}>{{bookmark.title}}</a>
           <button type="button" name="button">Delete</button>
         </li>
       </ul>
       <hr/>
-      <button ng-click="startCreating()" ng-if="currentCategory" type="button" name="button">Create new bookmark</button>
+      <button ng-if="!isEditing" ng-click="startCreating()" ng-if="currentCategory" type="button" name="button">Create new bookmark</button>
       <form ng-submit="createNewBookmark(newBookmark)" ng-if="isCreating">
         <h2>Create a bookmark</h2>
         <input placeholder="title" type="text" name="title" ng-model="newBookmark.title" />
         <input placeholder="url" type="text" name="url" ng-model="newBookmark.url" />
         <button type="submit" name="button">Create</button>
         <button ng-click="cancelCreating()" type="submit" name="button">Cancel</button>
+      </form>
+      <form ng-if="isEditing" ng-submit="updateBookmark(editingBookmark)">
+        <h2>Editing {{editingBookmark.title}}</h2>
+        <input placeholder="title" type="text" name="title" ng-model="editingBookmark.title" />
+        <input placeholder="url" type="text" name="url" ng-model="editingBookmark.url" />
+        <button type="submit" name="button">Save</button>
+        <button ng-click="cancelEditing()" type="submit" name="button">Cancel</button>
       </form>
     </div>
   </body>

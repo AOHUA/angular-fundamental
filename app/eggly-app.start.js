@@ -69,7 +69,7 @@ angular.module('Eggly', [
 
   function createNewBookmark(bookmark) {
     var newBookmark = {
-      id: new Date(),
+      id: Date.now(),
       category: $scope.currentCategory.name,
       url: bookmark.url,
       title: bookmark.title
@@ -77,9 +77,22 @@ angular.module('Eggly', [
     $scope.bookmarks.push(newBookmark);
     resetForm(bookmark);
   }
+  $scope.editingBookmark = null;
+  function setEditingBookmark(bookmark) {
+    $scope.editingBookmark = angular.copy(bookmark);
+    console.log('bookmark', bookmark);
+  }
 
-
-
+  function updateBookmark(bookmark) {
+      var index = _.findIndex($scope.bookmarks, function(b) {
+        return b.id == bookmark.id;
+      });
+      $scope.bookmarks[index] = bookmark;
+      $scope.editedBookmark = null;
+      $scope.isEditing = false;
+  }
+  $scope.updateBookmark = updateBookmark;
+  $scope.setEditingBookmark = setEditingBookmark;
   $scope.createNewBookmark = createNewBookmark;
 })
 ;
