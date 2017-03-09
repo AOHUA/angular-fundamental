@@ -77,10 +77,11 @@ angular.module('Eggly', [
     $scope.bookmarks.push(newBookmark);
     resetForm(bookmark);
   }
+  $scope.createNewBookmark = createNewBookmark;
+  
   $scope.editingBookmark = null;
   function setEditingBookmark(bookmark) {
     $scope.editingBookmark = angular.copy(bookmark);
-    console.log('bookmark', bookmark);
   }
 
   function updateBookmark(bookmark) {
@@ -93,6 +94,5 @@ angular.module('Eggly', [
   }
   $scope.updateBookmark = updateBookmark;
   $scope.setEditingBookmark = setEditingBookmark;
-  $scope.createNewBookmark = createNewBookmark;
 })
 ;
