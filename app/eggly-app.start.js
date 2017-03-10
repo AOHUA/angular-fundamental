@@ -1,6 +1,16 @@
 angular.module('Eggly', [
-
+  'ui.router',
+  'categories',
+  'categories.bookmarks'
 ])
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('eggly', {
+      url: '',
+      abstract: true
+    });
+  $urlRouterProvider.otherwise('/');
+})
 .controller('MainCtrl', function($scope) {
   $scope.categories = [
     {id: 0, name: 'development'},
@@ -78,7 +88,7 @@ angular.module('Eggly', [
     resetForm(bookmark);
   }
   $scope.createNewBookmark = createNewBookmark;
-  
+
   $scope.editingBookmark = null;
   function setEditingBookmark(bookmark) {
     $scope.editingBookmark = angular.copy(bookmark);
